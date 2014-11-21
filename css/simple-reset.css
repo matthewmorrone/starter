@@ -1,0 +1,8 @@
+*,html, body, div, p, ul, ol, li, table, tr, td, br, a{
+margin:0;
+padding:0;
+border-collapse:collapse;
+border:0 none;
+font-weight:normal;
+list-style:none;
+}
