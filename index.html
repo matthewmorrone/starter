@@ -1,16 +1,164 @@
 <html>
 <head>
 
-<icon src='psi.ico' />
-<style src='reset.css' />
-<style src='normal.css' />
-<style src='bootstrap.css' />
-<style src='bootstrap-responsive.css' />
+<icon src='psi.ico'></icon>
+<style src='css/reset.css'></style>
+<style src='css/normal.css'></style>
+<style src='css/bootstrap.css'></style>
+<style src='css/bootstrap-responsive.css'></style>
 
-<script src='require.js'>
 
-require(['jquery', 	'underscore', 	'backbone', 'modern', 	'prefix', 	'bootstrap'],
-function( $, 		 _, 			 backbone,	 modern, 	 prefix, 	bootstrap) {
+
+<!-- <script src='typescript.js'></script> -->
+<!-- <script src='typescript.compiler.js'></script> -->
+
+<script src='require.js'></script>
+<script main>
+
+require(['jquery', 	'jquery.helpers', 	'underscore', 	'coffeescript', /*'TypeScript', 	'typescriptcompile', */'backbone', 	'modern'], //, 	'prefix'
+function( $, 		 helpers, 			_, 				coffeescript,	 /*TypeScript, 	typescriptcompile, */	backbone,	 modern) { //, 	 prefix
+
+
+
+
+
+$(function() {
+
+
+/*
+
+$("script").each(function () {
+	$(this).text($(this).text().usurp(scripts));
+});
+<!--
+<script>
+$(@f() {
+
+});<
+/script>
+var scripts = {
+	"f": "function",
+}
+
+	// for(var i = 0; i < scripts.length; i++) {
+	// 	$("head").append(scripts[i]);
+	// }
+	// $("script").each(function () {
+	// 	var script = $(this);
+	// 	var inline = $("<script><\/script>");
+	// 	var include = $("<script><\/script>");
+
+	// 	if (script.text() !== "" && script.src() !== "") {
+	// 		inline.text(script.text());
+	// 		include.src(script.src());
+	// 	}
+	// 	script.after(include).after(inline);
+	// 	script.remove();
+
+	// });
+-->
+*/
+
+
+	$("coffeescript, script[type='text\/coffeescript']").each(function() {
+		if ($(this).attr("main")) {return;}
+		var script = $("<script><\/script>", {type: "text\/javascript"}).text(coffeescript.compile($(this).text()));
+		$("head").append(script);
+		$(this).remove();
+	});
+
+	// $("typescript, script[type='text\/typescript']").each(function() {
+	// 	if ($(this).attr("main")) {return;}
+	// 	        var outfile = {
+ //            source: '',
+ //            Write: function(s) {
+ //                this.source += s;
+ //            },
+ //            WriteLine: function(s) {
+ //                this.source += s + '\n';
+ //            },
+ //            Close: function() {}
+ //        };
+ //        var compiler = new TypeScript.TypeScriptCompiler(outfile);
+	// 	console.log(compiler);
+	// 	// var script = $("<script><\/script>", {type: "text\/javascript"}).text(typescriptcompile.compile($(this).text()));
+	// 	$("head").append(script);
+	// 	$(this).remove();
+
+	// });
+
+	$("style").each(function () {
+		var style = $(this);
+		var link = $("<link \/>", {
+			rel: "stylesheet",
+			type: "text\/css"
+		});
+		var styles = $("<style><\/style>");
+
+		if (style.src() !== "") {
+			if (style.text() == "") {
+				link.href(style.src());
+				$("head").append(link);
+			} else {
+				link.attr("href", style.src());
+				styles.text(style.text());
+				$("head").append(link);
+				$("head").append(styles);
+			}
+
+		}
+		style.remove();
+
+	});
+	var styles = {
+		"sb": "1px solid black",
+		"b": "border",
+	};
+	String.prototype.usurp = function (dict) {
+		var flag = arguments[1] || "@";
+		var str = Object.keys(dict).join('|');
+		var re = RegExp(flag + '(' + str + ')', 'ig');
+		return this.replace(re, function (_, word) {
+			_ = dict[word.toLowerCase()];
+			if (/^[A-Z][a-z]/.test(word)) // initial caps
+				_ = _.slice(0, 1).toUpperCase() + _.slice(1);
+			else if (/^[A-Z][A-Z]/.test(word)) // all caps
+				_ = _.toUpperCase();
+			return _;
+		});
+	}
+	if (typeof String.prototype.supplant !== 'function') {
+		String.prototype.supplant = function (o) {
+			return this.replace(/{{([^{}]*)}}/g, function (a, b) {
+				var r = o[b];
+				return typeof r === 'string' ? r : a;
+			});
+		};
+	}
+	$("style").each(function () {
+		$(this).text($(this).text().usurp(styles));
+	});
+	$("icon").each(function () {
+		var icon = $(this);
+		var link = $("<link \/>", {
+			href: icon.src(),
+			rel: "icon",
+			type: "image\/png"
+		});
+		icon.remove();
+		$("head").append(link);
+	});
+	$("fragment[data-src]").each(function () {
+		var src = $(this);
+		$.post(src.attr("data-src"), function (data) {
+			src.html(data);
+		});
+	});
+
+
+
+});
+
 
 
 B = Boolean.prototype;
@@ -43,8 +191,95 @@ M = Math.prototype;
 
 </head>
 <body>
+<style>
+.table .col .cell {
+	@b-top: @sb;
+	@b-left: @sb;
+}
+.table .col: last-child {
+	@b-right: @sb;
+}
+.table .col {
+	@b-bottom: @sb;
+}
+.table .col {
+	float: left;
+}
+.table .caption {
+	@b-top: @sb;
+	@b-left: @sb;
+	@b-right: @sb;
+	text-align: center;
+}
+</style>
+
+<script type='text/coffeescript'>
+
+# console.log "hello"
 
 
+</script>
+
+<coffeescript>
+# Assignment:
+number   = 42
+opposite = true
+
+# Conditions:
+number = -42 if opposite
+
+# Functions:
+square = (x) -> x * x
+
+# Arrays:
+list = [1, 2, 3, 4, 5]
+
+
+# Objects:
+math =
+  root:   Math.sqrt
+  square: square
+  cube:   (x) -> x * square x
+
+# Splats:
+race = (winner, runners...) ->
+  print winner, runners
+
+# Existence:
+alert "I knew it!" if elvis?
+
+# Array comprehensions:
+cubes = (math.cube num for num in list)
+
+
+</coffeescript>
+
+
+<!-- <typescript> -->
+<script type='text/typescript'>
+
+
+class Greeter {
+	greeting: string;
+	constructor(message: string) {
+		this.greeting = message;
+	}
+	greet() {
+		return "Hello, " + this.greeting;
+	}
+}
+
+var greeter = new Greeter("world");
+
+var button = document.createElement('button');
+button.textContent = "Say Hello";
+button.onclick = function() {
+	alert(greeter.greet());
+}
+
+document.body.appendChild(button);
+
+</script>
 
 
 </body>
