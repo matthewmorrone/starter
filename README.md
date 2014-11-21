@@ -5,11 +5,11 @@ template for future projects
 
 currently supports:
 
-the following custom elements: <icon>, <coffeescript>
-augments the following elements: <script>, <style>
-css preprocessing
-in-browser coffeescript
++ custom elements: \<icon\>, \<coffeescript\>
++ augments the following elements: \<script\>, \<style\>
++ css preprocessing
++ in-browser coffeescript
 
-to-do:
+next:
 
-in-browser typescript
++ in-browser typescript
