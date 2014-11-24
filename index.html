@@ -2,63 +2,75 @@
 <head>
 
 <icon src='psi.ico'></icon>
-<style src='css/reset.css'></style>
-<style src='css/normal.css'></style>
-<style src='css/bootstrap.css'></style>
-<style src='css/bootstrap-responsive.css'></style>
-
-
-
-<!-- <script src='typescript.js'></script> -->
-<!-- <script src='typescript.compiler.js'></script> -->
-
+<script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script>
 <script src='require.js'></script>
+
 <script main>
+var log = console.log.bind(console);
 
-require(['jquery', 	'jquery.helpers', 	'underscore', 	'coffeescript', /*'TypeScript', 	'typescriptcompile', */'backbone', 	'modern'], //, 	'prefix'
-function( $, 		 helpers, 			_, 				coffeescript,	 /*TypeScript, 	typescriptcompile, */	backbone,	 modern) { //, 	 prefix
+// function log() {console.log(arguments);};
+
+require.config({
+	baseUrl: "js",
+	paths : {
+        css: 'require/css',
+        font: 'require/font',
+        image: 'require/image',
+        propertyParser : 'require/propertyParser',
+        jquery: [
+            'http://code.jquery.com/jquery-1.11.0.min',
+            'jquery'
+        ],
 
 
 
+        reset: "../css/reset",
+        normal: "../css/normal",
+        bootstrap: "../css/bootstrap"
+    },
+	scriptType: "text/javascript"
+});
+
+
+
+
+
+// var deps = [
+// 	/*'require.css', */
+// 	'jquery', 	
+// 	'jquery.helpers', 	
+// 	'underscore', 	
+// 	'coffeescript', 
+// 	/*'TypeScript', 	'typescriptcompile', 	'prefix', */	
+// 	'backbone', 	
+// 	'modern'
+// 	];
+// // var deps = {
+// // 	'jquery': "$", 	
+// // 	'jquery.helpers':'helpers', 	
+// // 	'underscore':"_", 	
+// // 	'coffeescript':"coffeescript", 
+// // 	'backbone':"backbone", 	
+// // 	'modern':"modern"
+// // };
+// require(deps, function() {
+// 	var args = {};
+// 	deps.every(function(o, i, a) {
+// 		log(o, i, a, deps[i]);
+// 		return true;
+// 	});
+// });
+// require(["image!img/psi.ico"]);
+// require(["font!fonts/font-awesome"]);
+require(['css!reset', 'css!normal', 'css!bootstrap'], function() {});
+// require("css", ['reset', 'normal', 'bootstrap'], function() {}); 
+
+
+require(['jquery', 	'jquery.helpers', 	'underscore', 	'coffeescript',	'backbone'/*, 	'modern'*/],
+function($, 		 helpers, 			_, 				coffeescript,	 backbone/*,	 	modern*/) {
 
 
 $(function() {
-
-
-/*
-
-$("script").each(function () {
-	$(this).text($(this).text().usurp(scripts));
-});
-<!--
-<script>
-$(@f() {
-
-});<
-/script>
-var scripts = {
-	"f": "function",
-}
-
-	// for(var i = 0; i < scripts.length; i++) {
-	// 	$("head").append(scripts[i]);
-	// }
-	// $("script").each(function () {
-	// 	var script = $(this);
-	// 	var inline = $("<script><\/script>");
-	// 	var include = $("<script><\/script>");
-
-	// 	if (script.text() !== "" && script.src() !== "") {
-	// 		inline.text(script.text());
-	// 		include.src(script.src());
-	// 	}
-	// 	script.after(include).after(inline);
-	// 	script.remove();
-
-	// });
--->
-*/
-
 
 	$("coffeescript, script[type='text\/coffeescript']").each(function() {
 		if ($(this).attr("main")) {return;}
@@ -67,25 +79,6 @@ var scripts = {
 		$(this).remove();
 	});
 
-	// $("typescript, script[type='text\/typescript']").each(function() {
-	// 	if ($(this).attr("main")) {return;}
-	// 	        var outfile = {
- //            source: '',
- //            Write: function(s) {
- //                this.source += s;
- //            },
- //            WriteLine: function(s) {
- //                this.source += s + '\n';
- //            },
- //            Close: function() {}
- //        };
- //        var compiler = new TypeScript.TypeScriptCompiler(outfile);
-	// 	console.log(compiler);
-	// 	// var script = $("<script><\/script>", {type: "text\/javascript"}).text(typescriptcompile.compile($(this).text()));
-	// 	$("head").append(script);
-	// 	$(this).remove();
-
-	// });
 
 	$("style").each(function () {
 		var style = $(this);
@@ -154,12 +147,7 @@ var scripts = {
 			src.html(data);
 		});
 	});
-
-
-
 });
-
-
 
 B = Boolean.prototype;
 
@@ -178,13 +166,6 @@ M = Math.prototype;
 // J = JSON.prototype;
 // set, weakset
 // map, weakmap
-
-
-
-// color --> chroma
-// date --> moment
-// promises --> q
-
 
 });
 </script>
@@ -251,13 +232,11 @@ alert "I knew it!" if elvis?
 # Array comprehensions:
 cubes = (math.cube num for num in list)
 
-
 </coffeescript>
 
 
 <!-- <typescript> -->
 <script type='text/typescript'>
-
 
 class Greeter {
 	greeting: string;
@@ -280,7 +259,7 @@ button.onclick = function() {
 document.body.appendChild(button);
 
 </script>
-
+<!-- </typescript> -->
 
 </body>
 </html>
