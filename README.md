@@ -5,27 +5,25 @@ template for future projects
 
 currently supports:
 
-+ custom elements: \<icon\>, \<coffeescript\>
+
++ in-browser coffeescript, livescript and typescript
++ in-browser sass (plus scss?), less and stylus
+
+typescript doesn't have its own tag yet
+
+<!--
++ custom elements: \<icon\>, \<fragment\>
 + augments the following elements: \<script\>, \<style\>
 + css preprocessing
-+ in-browser coffeescript
-
+-->
 
 next:
 
-+ in-browser typescript
++ compass
++ jade
++ slim
++ markdown
++ haml
++ yaml
 
 
-<!--
-less
-sass
-scss
-compass
-
-stylus
-jade
-slim
-markdown
-haml
-livescript
--->

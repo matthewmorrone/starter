@@ -6889,7 +6889,7 @@ parse: function parse(input) {
                 popStack(1);
                 state = stack[stack.length-1];
             }
-            
+
             preErrorSymbol = symbol; // save the lookahead token
             symbol = TERROR;         // insert generic error symbol as new lookahead
             state = stack[stack.length-1];
@@ -8924,7 +8924,7 @@ LiveScript.load = function(url, callback){
 };
 LiveScript.go = function(){
   var type, sink, i$, ref$, len$, script, that;
-  type = /^(?:text\/|application\/)?ls$/i;
+  type = /^(?:text\/|application\/)?livescript$/i;
   sink = function(error){
     error && setTimeout(function(){
       throw error;

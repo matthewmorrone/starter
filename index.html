@@ -3,41 +3,80 @@
 <meta charset="utf-8">
 <icon src='psi.ico'></icon>
 <script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script>
-<script src='load.js'></script>
+<!-- <script src='load.js'></script> -->
+<script src="./js/coffeescript.js"></script>
+<script src="./js/livescript.js"></script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/jquery.helpers.js"></script>
+<script src="./js/lodash.js"></script>
+<script src="./js/backbone.js"></script>
+<script src="./js/chroma.js"></script>
+<script src="./js/q.js"></script>
+<script src="./js/d3.js"></script>
+<script src="./js/sigma.js"></script>
+
+
+
+<script src="./js/sass.js"></script>
+<script> less = {async: false }; </script>
+<script src="./js/less.js"></script>
+<script src="./js/stylus.js"></script>
+<link type="text/css" rel="stylesheet" href="./css/reset.css">
+<link type="text/css" rel="stylesheet" href="./css/normal.css">
+<link type="text/css" rel="stylesheet" href="./css/bootstrap.css">
 <script>
 var log = console.log.bind(console); // function log() {console.log(arguments);};
 
-var jsFiles = [	'jquery', 'lodash', 'chroma', 'd3', 'sigma'];
-var cssPreprocessors = ['sass', 'less',	'stylus'];
-
-var jsPreprocessors = ['coffeescript', 'livescript'];
-var cssFiles = ['reset', 'normal', 'bootstrap'];
-
-log(load.js(jsPreprocessors, "js"));
-log(load.js(jsFiles, "js"));
-
-log(load.js(cssPreprocessors, "js"));
-log(load.css(cssFiles, "css"));
 
 
 $(function() {
 
-	// $("coffeescript").each(function() {
-	// 	var $this = $(this);
-	// 	var script = $("<script><\/script>", {type: "text\/javascript"}).text(CoffeeScript.compile($this.text()));
-	// 	$this.replaceWith(script);
-	// });
-	// var LiveScript = require("LiveScript");
-	// $("livescript").each(function() {
-	// 	var $this = $(this);
-	// 	var script = $("<script><\/script>", {type: "text\/javascript"}).text(LiveScript.compile($this.text()));
-	// 	$this.replaceWith(script);
-	// });
+	$("coffeescript").each(function() {
+		var $this = $(this)[0];
+		var script = $("<script><\/script>", {type: "text\/javascript"}).text(CoffeeScript.compile($this.text()));
+		$this.replaceWith(script);
+	});
 
 
 
+	var LiveScript = require("LiveScript");
+	$("livescript").each(function() {
+		var $this = $(this);
+		var script = $("<script><\/script>", {type: "text\/livescript"}).text($this.text());
+		$this.replaceWith(script);
+	});
+	LiveScript.compile();
+	LiveScript.go();
+
+	$("sass").each(function() {
+		var input = $(this)[0];
+		var style = document.createElement("style");
+		style.innerHTML = "/* from sass*/\n\n"+Sass.compile(input.innerHTML);
+		input.parentNode.replaceChild(style, input);
+		log("sass works");
+	});
 
 
+	$("stylus").each(function() {
+		var input = $(this)[0];
+		var rendered = stylus.render(input.innerHTML);
+		var style = document.createElement("style");
+		style.innerHTML = "/* from stylus*/\n\n"+rendered;
+		input.parentNode.replaceChild(style, input);
+		log("stylus works");
+	})
+
+	// try and make this async
+	$("less").each(function() {
+		var input = $(this)[0];
+		less.render(input.innerHTML).then(function(output) {
+			var style = document.createElement("style");
+			style.innerHTML = "/* from less*/\n\n"+output.css;
+			input.parentNode.replaceChild(style, input);
+			log("less works");
+		});
+	});
 
 	$("style").each(function () {
 		var style = $(this);
@@ -50,15 +89,16 @@ $(function() {
 		if (style.src() !== "") {
 			if (style.text() == "") {
 				link.href(style.src());
-				$("head").append(link);
+				// $("head").append(link);
 			} else {
 				link.attr("href", style.src());
 				styles.text(style.text());
-				$("head").append(link);
-				$("head").append(styles);
+				// $("head").append(link);
+				// $("head").append(styles);
 			}
+			// style.remove();
+
 		}
-		style.remove();
 	});
 
 	$("icon").each(function () {
@@ -79,12 +119,14 @@ $(function() {
 		});
 	});
 
+
+
 });
 
 
 
-
 </script>
+
 
 </head>
 <body>
@@ -96,7 +138,7 @@ $(function() {
 <coffeescript>
 
 # Assignment:
-number   = 42
+number	 = 42
 opposite = true
 
 # Conditions:
@@ -110,13 +152,13 @@ list = [1, 2, 3, 4, 5]
 
 # Objects:
 math =
-  root:   Math.sqrt
-  square: square
-  cube:   (x) -> x * square x
+	root:	 Math.sqrt
+	square: square
+	cube:	 (x) -> x * square x
 
 # Splats:
 race = (winner, runners...) ->
-  print winner, runners
+	print winner, runners
 
 # Existence:
 alert "I knew it!" if elvis?
@@ -124,23 +166,23 @@ alert "I knew it!" if elvis?
 # Array comprehensions:
 cubes = (math.cube num for num in list)
 
+console.log "coffeescript works"
+
 </coffeescript>
 <livescript>
 
-func = (num) ->
-  switch num
-  case 2, 4, 6
-	Boolean true
-  case [1, 3, 5]
-	Boolean false
-  default
-eq func(2), true
-eq func(6), true
-eq func(3), false
-eq func(8), void
+
+switch 6
+case 1		then out = \hello
+case 2, 4 then out = \boom
+case 6
+	out = 'here it is'
+default out = \something
+
+console.log "livescript works"
 
 </livescript>
-<typescript>
+<script type="text/typescript">
 
 class Greeter {
 	greeting: string;
@@ -160,8 +202,63 @@ button.onclick = function() {
 	alert(greeter.greet());
 }
 
-document.body.appendChild(button);
+// document.body.appendChild(button);
 
-</typescript>
+console.log("typescript works");
+
+</script>
+<script src="./js/typescript.js"></script>
+<script src="./js/typescript.compile.js"></script>
+
+
+
+<sass>
+
+$someVar: 123px;
+.some-selector
+{
+	width: $someVar;
+}
+
+$foo: 10px;
+.selector
+{
+	margin: $foo;
+	.nested
+	{
+		margin: $foo / 2;
+	}
+}
+
+
+</sass>
+<less>
+
+@color: white;
+p {
+	color: @color;
+}
+.class {
+	width: (1 + 1);
+}
+body {
+	background-color: @color;
+}
+
+</less>
+<stylus>
+
+body {
+	font: 14px/1.5 Helvetica, arial, sans-serif;
+	#logo {
+		border-radius: 5px;
+	}
+}
+
+
+</stylus>
+
+
+
 </body>
 </html>
