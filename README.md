@@ -10,6 +10,22 @@ currently supports:
 + css preprocessing
 + in-browser coffeescript
 
+
 next:
 
 + in-browser typescript
+
+
+<!--
+less
+sass
+scss
+compass
+
+stylus
+jade
+slim
+markdown
+haml
+livescript
+-->
