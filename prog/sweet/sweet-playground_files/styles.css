@@ -1,0 +1,24 @@
+body {
+	max-width: 80%;
+	margin: 0 auto;
+}
+
+pre, textarea {
+	width: 50%;
+	padding: 10px;
+	float: left;
+	min-height: 500px;
+	max-height: 500px;
+	border: none;
+	resize: none;
+	font-family: Consolas,Monaco,'Andale Mono',monospace;
+	margin-top: 0.5em;
+
+	
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+pre {
+	border-left: 2px solid #000;
+}

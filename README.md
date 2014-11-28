@@ -8,6 +8,7 @@ currently supports:
 
 + in-browser coffeescript, livescript and typescript
 + in-browser sass (plus scss?), less and stylus
++ markdown, haml, yaml, jade, emblem
 
 typescript doesn't have its own tag yet
 
@@ -19,11 +20,12 @@ typescript doesn't have its own tag yet
 
 next:
 
-+ compass
-+ jade
-+ slim
-+ markdown
-+ haml
-+ yaml
++ traceur ES6 and/or 6to5
++ jsx (react)
++ processing
++ compass (sass and scss)
++ myth
+
+
 
 

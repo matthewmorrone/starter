@@ -9,73 +9,136 @@
 
 <script src="./js/jquery.js"></script>
 <script src="./js/jquery.helpers.js"></script>
-<script src="./js/lodash.js"></script>
+<!-- <script src="./js/lodash.js"></script>
 <script src="./js/backbone.js"></script>
 <script src="./js/chroma.js"></script>
 <script src="./js/q.js"></script>
 <script src="./js/d3.js"></script>
-<script src="./js/sigma.js"></script>
+<script src="./js/sigma.js"></script> -->
 
 
 
-<script src="./js/sass.js"></script>
-<script> less = {async: false }; </script>
-<script src="./js/less.js"></script>
-<script src="./js/stylus.js"></script>
+<script src="./js/markdown.js"></script>
+<script src="./js/haml.js"></script>
+
+
+<script src="./js/esprima.js"></script>
+<script src="./js/yaml.js"></script>
+
+<script src="./js/jade.js"></script>
+
+<script src="./js/emblem.js"></script>
+
+<!-- <script src="./js/sass.js"></script> -->
+<!-- <script> less = {async: false }; </script> -->
+<!-- <script src="./js/less.js"></script> -->
+<!-- <script src="./js/stylus.js"></script> -->
 <link type="text/css" rel="stylesheet" href="./css/reset.css">
 <link type="text/css" rel="stylesheet" href="./css/normal.css">
 <link type="text/css" rel="stylesheet" href="./css/bootstrap.css">
+<style>
+[hide], [from] {
+	display: none;
+}
+
+</style>
 <script>
 var log = console.log.bind(console); // function log() {console.log(arguments);};
 
-
+var yaml = jsyaml;
 
 $(function() {
 
-	$("coffeescript").each(function() {
-		var $this = $(this)[0];
-		var script = $("<script><\/script>", {type: "text\/javascript"}).text(CoffeeScript.compile($this.text()));
-		$this.replaceWith(script);
+
+
+
+	// $("coffeescript").each(function() {
+	// 	return;
+	// 	var $this = $(this);
+	// 	var script = $("<script><\/script>", {type: "text\/javascript"}).text(CoffeeScript.compile($this.text()));
+	// 	$this.replaceWith(script);
+	// });
+
+
+
+	// var LiveScript = require("LiveScript");
+	// $("livescript").each(function() {
+	// 	return;
+	// 	var $this = $(this);
+	// 	var script = $("<script><\/script>", {type: "text\/livescript"}).text($this.text());
+	// 	$this.replaceWith(script);
+	// });
+	// LiveScript.compile();
+	// LiveScript.go();
+
+	// $("sass").each(function() {
+	// 	var input = $(this)[0];
+	// 	var style = document.createElement("style");
+	// 	style.innerHTML = "/* from sass*/\n\n"+Sass.compile(input.innerHTML);
+	// 	input.parentNode.replaceChild(style, input);
+	// 	log("sass works");
+	// });
+
+
+	// $("stylus").each(function() {
+	// 	var input = $(this)[0];
+	// 	var rendered = stylus.render(input.innerHTML);
+	// 	var style = document.createElement("style");
+	// 	style.innerHTML = "/* from stylus*/\n\n"+rendered;
+	// 	input.parentNode.replaceChild(style, input);
+	// 	log("stylus works");
+	// })
+
+	// // try and make this non-async
+	// $("less").each(function() {
+	// 	var input = $(this)[0];
+	// 	less.render(input.innerHTML).then(function(output) {
+	// 		var style = document.createElement("style");
+	// 		style.innerHTML = "/* from less*/\n\n"+output.css;
+	// 		input.parentNode.replaceChild(style, input);
+	// 		log("less works");
+	// 	});
+	// });
+
+	$("markdown").each(function() {
+		var text = $(this).text();
+		var div = document.createElement("div");
+		div.innerHTML = markdown.toHTML(text);
+		div.setAttribute("from", "markdown");
+
+		$(this)[0].parentNode.replaceChild(div, $(this)[0]);
+		log("markdown works");
+
 	});
 
-
-
-	var LiveScript = require("LiveScript");
-	$("livescript").each(function() {
-		var $this = $(this);
-		var script = $("<script><\/script>", {type: "text\/livescript"}).text($this.text());
-		$this.replaceWith(script);
-	});
-	LiveScript.compile();
-	LiveScript.go();
-
-	$("sass").each(function() {
-		var input = $(this)[0];
-		var style = document.createElement("style");
-		style.innerHTML = "/* from sass*/\n\n"+Sass.compile(input.innerHTML);
-		input.parentNode.replaceChild(style, input);
-		log("sass works");
+	$("haml").each(function() {
+		var text = Haml.render($(this).text());
+		var div = document.createElement("div");
+		div.innerHTML = text;
+		div.class = "hide";
+		div.setAttribute("from", "haml");
+		$(this)[0].parentNode.replaceChild(div, $(this)[0]);
+		log("haml works");
 	});
 
+	$("yaml").each(function() {
+		var text = JSON.stringify(yaml.load($(this).text()));
+		var div = document.createElement("div");
+		div.innerHTML = text;
+		div.setAttribute("from", "yaml");
 
-	$("stylus").each(function() {
-		var input = $(this)[0];
-		var rendered = stylus.render(input.innerHTML);
-		var style = document.createElement("style");
-		style.innerHTML = "/* from stylus*/\n\n"+rendered;
-		input.parentNode.replaceChild(style, input);
-		log("stylus works");
-	})
+		$(this)[0].parentNode.replaceChild(div, $(this)[0]);
+		log("yaml works");
+	});
 
-	// try and make this async
-	$("less").each(function() {
-		var input = $(this)[0];
-		less.render(input.innerHTML).then(function(output) {
-			var style = document.createElement("style");
-			style.innerHTML = "/* from less*/\n\n"+output.css;
-			input.parentNode.replaceChild(style, input);
-			log("less works");
-		});
+	$("jade").each(function() {
+		var text = jade.render($(this).text());
+		var div = document.createElement("div");
+		div.innerHTML = text;
+		div.setAttribute("from", "jade");
+
+		$(this)[0].parentNode.replaceChild(div, $(this)[0]);
+		log("jade works");
 	});
 
 	$("style").each(function () {
@@ -135,10 +198,10 @@ $(function() {
 
 
 
-<coffeescript>
+<coffeescript hide>
 
 # Assignment:
-number	 = 42
+number	= 42
 opposite = true
 
 # Conditions:
@@ -152,9 +215,9 @@ list = [1, 2, 3, 4, 5]
 
 # Objects:
 math =
-	root:	 Math.sqrt
+	root:	Math.sqrt
 	square: square
-	cube:	 (x) -> x * square x
+	cube:	(x) -> x * square x
 
 # Splats:
 race = (winner, runners...) ->
@@ -169,7 +232,7 @@ cubes = (math.cube num for num in list)
 console.log "coffeescript works"
 
 </coffeescript>
-<livescript>
+<livescript hide>
 
 
 switch 6
@@ -212,7 +275,7 @@ console.log("typescript works");
 
 
 
-<sass>
+<sass hide>
 
 $someVar: 123px;
 .some-selector
@@ -232,7 +295,7 @@ $foo: 10px;
 
 
 </sass>
-<less>
+<less hide>
 
 @color: white;
 p {
@@ -246,7 +309,7 @@ body {
 }
 
 </less>
-<stylus>
+<stylus hide>
 
 body {
 	font: 14px/1.5 Helvetica, arial, sans-serif;
@@ -257,8 +320,67 @@ body {
 
 
 </stylus>
+<markdown>
+
+Markdown Works [Cheatsheet][1]
 
 
+<!-- To see what else you can do with Markdown (including **tables**, **images**, **numbered lists**, and more) take a look at the	-->
+
+<!-- . And then try it out by typing in this box! -->
+
+[1]: https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet
+
+
+
+
+</markdown>
+
+<haml>
+
+
+%span
+	%strong> Haml Works
+
+%a(href="http://haml.info/docs/yardoc/file.REFERENCE.html") Reference
+</haml>
+
+<yaml hide>
+
+map:
+	# Unordered set of key: value pairs.
+	Block style: !!map
+		Clark : Evans
+		Ingy : döt Net
+		Oren : Ben-Kiki
+	Flow style: !!map { Clark: Evans, Ingy: döt Net, Oren: Ben-Kiki }
+
+
+</yaml>
+
+<jade>
+title= pageTitle
+script(type='text/javascript').
+	if (foo) {
+		bar(1 + 5)
+	}
+h1 Jade - node template engine
+#container.col
+	if youAreUsingJade
+		p You are amazing
+	else
+		p Get on it!
+	p.
+		Jade is a terse and simple
+		templating language with a
+		strong focus on performance
+		and powerful features.
+
+</jade>
+<script type="text/x-emblem" data-template-name="application">
+  h1 Welcome to my App
+  = outlet
+</script>
 
 </body>
 </html>

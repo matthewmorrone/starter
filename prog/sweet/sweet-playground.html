@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)http://thecssninja.com/demo/macros/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Try macros with sweet.js</title>
+    <link rel="stylesheet" type="text/css" href="./sweet-playground_files/styles.css">
+    <script src="./sweet-playground_files/ga.js"></script><script data-main="scripts/main" src="./sweet-playground_files/require.js"></script><style type="text/css"></style>
+	<link rel="stylesheet" href="http://thecssninja.com/demo/macros/prism.css" data-noprefix="">
+	
+	<!-- Google analytics -->
+	<script>
+		var _gaq=[['_setAccount','UA-4638292-1'],['_trackPageview']];
+		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
+<script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="main" src="./sweet-playground_files/main.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="scripts/sweet.js" src="./sweet-playground_files/sweet.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="escodegen" src="./sweet-playground_files/escodegen.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="parser" src="./sweet-playground_files/parser.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="expander" src="./sweet-playground_files/expander.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="underscore" src="./sweet-playground_files/underscore.js"></script></head>
+<body>
+	<h1>Try macros in JavaScript with <a href="http://sweetjs.org/">sweet.js</a></h1>
+<textarea id="macros">// All macros must be defined at the top
+macro oddadd {
+ case (($x:lit) &lt;+&gt; $y:lit) =&gt; {
+   $x + $y
+ }
+}
+
+macro def {
+  case $name:ident $params $body =&gt; {
+    function $name $params $body
+  }
+}
+
+macro oi {
+  case ($x:expr) =&gt; {
+    alert($x);
+  }
+}
+
+// Call your fancy new syntax here
+var z = oddadd((2) &lt;+&gt; 4);
+console.log(z);
+
+def winning() {
+  console.log('win');
+}
+
+oi("Flaming Galah!")
+
+winning();
+</textarea>
+<pre class=" language-javascript"><code class=" language-javascript" id="output"><span class="token keyword">var</span> z <span class="token operator">=</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">4</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span>log<span class="token punctuation">(</span>z<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">function</span> winning<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span>log<span class="token punctuation">(</span><span class="token string">'win'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+alert<span class="token punctuation">(</span><span class="token string">'Flaming Galah!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+winning<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+	<label>Name your macro:</label>
+	<input type="text" placeholder="Macro-in-the-house.js!" id="evalName">
+	<button id="compile">Compile</button>
+	<script>
+		var macros = document.getElementById("macros"),
+			output = document.getElementById("output"),
+			compile = document.getElementById("compile"),
+			evalName = document.getElementById("evalName"),
+			highlightT;
+    
+		compile.onclick = function(e) {
+			var macro = escodegen.generate(sweet.parse(macros.value));
+			
+			output.textContent = macro;
+			Prism.highlightAll();
+			macro = macro + "//@ sourceURL=" + (evalName.value || "Macro-in-the-house.js");
+			eval(macro);
+		}
+	</script>
+	<script src="./sweet-playground_files/prism.js"></script>
+
+</body></html>
