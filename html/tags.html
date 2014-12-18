@@ -1,0 +1,188 @@
+
+
+
+
+<coffeescript hide>
+
+# Assignment:
+number	= 42
+opposite = true
+
+# Conditions:
+number = -42 if opposite
+
+# Functions:
+square = (x) -> x * x
+
+# Arrays:
+list = [1, 2, 3, 4, 5]
+
+# Objects:
+math =
+	root:	Math.sqrt
+	square: square
+	cube:	(x) -> x * square x
+
+# Splats:
+race = (winner, runners...) ->
+	print winner, runners
+
+# Existence:
+alert "I knew it!" if elvis?
+
+# Array comprehensions:
+cubes = (math.cube num for num in list)
+
+console.log "coffeescript works"
+
+</coffeescript>
+<livescript hide>
+
+
+switch 6
+case 1		then out = \hello
+case 2, 4 then out = \boom
+case 6
+	out = 'here it is'
+default out = \something
+
+console.log "livescript works"
+
+</livescript>
+<script type="text/typescript">
+
+class Greeter {
+	greeting: string;
+	constructor(message: string) {
+		this.greeting = message;
+	}
+	greet() {
+		return "Hello, " + this.greeting;
+	}
+}
+
+var greeter = new Greeter("world");
+
+var button = document.createElement('button');
+button.textContent = "Say Hello";
+button.onclick = function() {
+	alert(greeter.greet());
+}
+
+// document.body.appendChild(button);
+
+console.log("typescript works");
+
+</script>
+
+<sass hide>
+
+$someVar: 123px;
+.some-selector
+{
+	width: $someVar;
+}
+
+$foo: 10px;
+.selector
+{
+	margin: $foo;
+	.nested
+	{
+		margin: $foo / 2;
+	}
+}
+
+
+</sass>
+<less hide>
+
+@color: white;
+p {
+	color: @color;
+}
+.class {
+	width: (1 + 1);
+}
+body {
+	background-color: @color;
+}
+
+</less>
+<stylus hide>
+
+body {
+	font: 14px/1.5 Helvetica, arial, sans-serif;
+	#logo {
+		border-radius: 5px;
+	}
+}
+
+
+</stylus>
+<markdown hide>
+
+Markdown Works [Cheatsheet][1]
+
+
+<!-- To see what else you can do with Markdown (including **tables**, **images**, **numbered lists**, and more) take a look at the	-->
+
+<!-- . And then try it out by typing in this box! -->
+
+[1]: https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet
+
+
+
+
+</markdown>
+
+<haml hide>
+
+
+%span
+	%strong> Haml Works
+
+%a(href="http://haml.info/docs/yardoc/file.REFERENCE.html") Reference
+</haml>
+
+<yaml hide>
+
+map:
+	# Unordered set of key: value pairs.
+	Block style: !!map
+		Clark : Evans
+		Ingy : döt Net
+		Oren : Ben-Kiki
+	Flow style: !!map { Clark: Evans, Ingy: döt Net, Oren: Ben-Kiki }
+
+
+</yaml>
+
+<jade hide>
+title= pageTitle
+script(type='text/javascript').
+	if (foo) {
+		bar(1 + 5)
+	}
+h1 Jade - node template engine
+#container.col
+	if youAreUsingJade
+		p You are amazing
+	else
+		p Get on it!
+	p.
+		Jade is a terse and simple
+		templating language with a
+		strong focus on performance
+		and powerful features.
+
+</jade>
+<script hide type="text/x-emblem" data-template-name="application">
+  h1 Welcome to my App
+  = outlet
+</script>
+<style>
+[hide], [from] {
+	display: none;
+}
+</style>

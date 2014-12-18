@@ -20,6 +20,9 @@ typescript doesn't have its own tag yet
 
 next:
 
++ sweet
++ wisp
++ port php.js, redo syntax
 + traceur ES6 and/or 6to5
 + jsx (react)
 + processing
